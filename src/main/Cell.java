@@ -40,6 +40,7 @@ public class Cell extends JButton{
 		} else {
 			bringToLife();
 		}
+		setBackground(currentColor);
 	}
 	
 	public boolean isAlive(){
