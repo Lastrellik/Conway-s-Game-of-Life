@@ -9,7 +9,7 @@ import org.junit.rules.ExpectedException;
 import main.Cell;
 
 public class CellTest {
-	Cell defaultCell = new Cell();
+	Cell defaultCell = new Cell(5, 5);
 	
 	@Rule
 	public ExpectedException ex = ExpectedException.none();
@@ -28,14 +28,14 @@ public class CellTest {
 	
 	@Test
 	public void testBringToLife(){
-		Cell cellToBringToLife = new Cell();
+		Cell cellToBringToLife = new Cell(0, 0);
 		cellToBringToLife.bringToLife();
 		assertTrue(cellToBringToLife.isAlive());
 	}
 	
 	@Test
 	public void testKill(){
-		Cell cellToKill = new Cell();
+		Cell cellToKill = new Cell(0, 0);
 		cellToKill.kill();
 		assertFalse(cellToKill.isAlive() && cellToKill.getCurrentColor() == Cell.getDeadColor());
 	}
@@ -92,7 +92,7 @@ public class CellTest {
 	
 	@Test
 	public void testGetCurrentColor(){
-		Cell cellToTestGetColor = new Cell();
+		Cell cellToTestGetColor = new Cell(0, 0);
 		cellToTestGetColor.bringToLife();
 		assertEquals(Cell.getAliveColor(), cellToTestGetColor.getCurrentColor());
 	}
@@ -113,6 +113,16 @@ public class CellTest {
 	public void testSetNumOfAliveNeighbors_tooLow(){
 		ex.expectMessage("invalid number of neighbors");
 		defaultCell.setNumOfAliveNeighbors(-5);
+	}
+	
+	@Test
+	public void testGetRow(){
+		assertTrue(defaultCell.getRow() == 5);
+	}
+	
+	@Test
+	public void testGetCol(){
+		assertTrue(defaultCell.getCol() == 5);
 	}
 	
 	@Test

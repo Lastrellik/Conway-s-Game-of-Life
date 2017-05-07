@@ -2,9 +2,10 @@ package tests;
 
 import static org.junit.Assert.*;
 import java.awt.GridLayout;
+
 import org.junit.*;
 import org.junit.rules.*;
-import main.Board;
+import main.*;
 
 public class BoardTest {
 	private final int WIDTH_IN_CELLS = 100;
@@ -84,6 +85,13 @@ public class BoardTest {
 		boardToTestNeighbors.bringOneCellToLife(50, 0);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, 0).getNumOfAliveNeighbors());
+	}
+	
+	@Test
+	public void testGetListOfNeighbors(){
+		Board testGetListOfNeighbors = new Board(10,10);
+		Cell cellToTest = testGetListOfNeighbors.cellAt(5, 5);
+		assertEquals(8, testGetListOfNeighbors.getListOfNeighbors(cellToTest).size());
 	}
 	
 	@Test

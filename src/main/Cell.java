@@ -15,11 +15,14 @@ public class Cell extends JButton{
 	private boolean alive = false;
 	private Color currentColor;
 	private int aliveNeighbors = 0;
+	private final int ROW, COL;
 	
-	public Cell(){
+	public Cell(int row, int col){
 		setBorder(new LineBorder(outlineColor));
 		setText("");
 		setFocusPainted(false);
+		this.ROW = row;
+		this.COL = col;
 		buildActionListener();
 		currentColor = Cell.deadColor;
 	}
@@ -81,6 +84,14 @@ public class Cell extends JButton{
 			throw new IllegalArgumentException("invalid number of neighbors");
 		}
 		this.aliveNeighbors = aliveNeighbors;
+	}
+
+	public int getRow() {
+		return ROW;
+	}
+
+	public int getCol() {
+		return COL;
 	}
 
 	public static Color getAliveColor() {

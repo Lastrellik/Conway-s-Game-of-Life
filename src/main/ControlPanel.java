@@ -11,4 +11,5 @@ public class ControlPanel extends JPanel{
 		setLayout(new FlowLayout());
 	}
 
+	
 }
