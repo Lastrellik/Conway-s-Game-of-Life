@@ -98,15 +98,16 @@ public class Board extends JPanel {
 	
 	public void updateActiveCells(){
 		for(Cell c : activeCells){
-			c.updateCell();
-			processCellLifeChange(c);
+			c.setNumOfAliveNeighbors(determineSingleCellNeighbors(c));
 		}
 		for(Cell c : activeCells){
-			c.setNumOfAliveNeighbors(determineSingleCellNeighbors(c));
+			c.updateCell();
+			processCellLifeChange(c);
 		}
 		activeCells.clear();
 		for(Cell d : aliveCells){
 			activeCells.addAll(getListOfNeighbors(d));
+			activeCells.add(d);
 		}
 		frameCount++;
 	}

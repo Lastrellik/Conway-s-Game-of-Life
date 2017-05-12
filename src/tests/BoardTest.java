@@ -115,7 +115,7 @@ public class BoardTest {
 		boardToUpdateActiveCells.bringOneCellToLife(0, 1);
 		boardToUpdateActiveCells.bringOneCellToLife(0, 2);
 		boardToUpdateActiveCells.updateActiveCells();
-		assertEquals(8, boardToUpdateActiveCells.getNumOfActiveCells());
+		assertEquals(9, boardToUpdateActiveCells.getNumOfActiveCells());
 	}
 	
 	@Test
