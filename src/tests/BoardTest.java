@@ -53,35 +53,35 @@ public class BoardTest {
 	}
 	
 	@Test
-	public void testCalculateCellNeighbors(){
+	public void testCalculateAllNeighbors(){
 		boardToTestNeighbors.bringOneCellToLife(50, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, 49).getNumOfAliveNeighbors());
 	}
 	
 	@Test
-	public void testCalculateCellNeighbors_topEdgeOfBoard(){
+	public void testCalculateAllNeighbors_topEdgeOfBoard(){
 		boardToTestNeighbors.bringOneCellToLife(0, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(0, 49).getNumOfAliveNeighbors());
 	}
 	
 	@Test
-	public void testCalculateCellNeighbors_bottomEdgeOfBoard(){
+	public void testCalculateAllNeighbors_bottomEdgeOfBoard(){
 		boardToTestNeighbors.bringOneCellToLife(HEIGHT_IN_CELLS - 1, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(HEIGHT_IN_CELLS - 1, 49).getNumOfAliveNeighbors());
 	}
 	
 	@Test
-	public void testCalculateCellNeighbors_rightEdgeOfBoard(){
+	public void testCalculateAllNeighbors_rightEdgeOfBoard(){
 		boardToTestNeighbors.bringOneCellToLife(50, WIDTH_IN_CELLS - 1);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, WIDTH_IN_CELLS - 1).getNumOfAliveNeighbors());
 	}
 	
 	@Test
-	public void testCalculateCellNeighbors_leftEdgeOfBoard(){
+	public void testCalculateAllNeighbors_leftEdgeOfBoard(){
 		boardToTestNeighbors.bringOneCellToLife(50, 0);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, 0).getNumOfAliveNeighbors());
@@ -96,16 +96,35 @@ public class BoardTest {
 	
 	@Test
 	public void testGetFrameCount(){
-		Board testGetFrameCountBoard = new Board(100, 100);
-		testGetFrameCountBoard.updateCells();
+		Board testGetFrameCountBoard = new Board(10, 10);
+		testGetFrameCountBoard.updateAllCells();
 		assertEquals(1, testGetFrameCountBoard.getFrameCount());
 	}
 	
 	@Test
-	public void testUpdateCells(){
-		Board boardToUpdateCells = new Board(100, 100);
-		boardToUpdateCells.updateCells();
-		assertEquals(1, boardToUpdateCells.getFrameCount());
+	public void testUpdateAllCells(){
+		Board boardToUpdateAllCells = new Board(10, 10);
+		boardToUpdateAllCells.updateAllCells();
+		assertEquals(1, boardToUpdateAllCells.getFrameCount());
+	}
+	
+	@Test
+	public void testUpdateActiveCells(){
+		Board boardToUpdateActiveCells = new Board(10, 10);
+		boardToUpdateActiveCells.bringOneCellToLife(0, 0);
+		boardToUpdateActiveCells.bringOneCellToLife(0, 1);
+		boardToUpdateActiveCells.bringOneCellToLife(0, 2);
+		boardToUpdateActiveCells.updateActiveCells();
+		assertEquals(8, boardToUpdateActiveCells.getNumOfActiveCells());
+	}
+	
+	@Test
+	public void testGetNumOfActiveCells(){
+		Board boardToTestGetNumOfActiveCells = new Board(10, 10);
+		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 0);
+		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 1);
+		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 2);
+		assertEquals(8, boardToTestGetNumOfActiveCells.getNumOfActiveCells());
 	}
 	
 	@Test
@@ -125,5 +144,12 @@ public class BoardTest {
 	public void testConstructor_negativeHeight() {
 		ex.expectMessage("board height cannot be negative");
 		Board boardNegativeHeight = new Board(10, -10);
+	}
+	
+	@Test
+	public void testProcessCellLifeChange(){
+		Board processCellLifeChangeBoard = new Board(10, 10);
+		processCellLifeChangeBoard.bringOneCellToLife(5, 5);
+		assertEquals(1, processCellLifeChangeBoard.getNumOfAliveCells());		
 	}
 }

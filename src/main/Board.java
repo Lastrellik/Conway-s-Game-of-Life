@@ -10,14 +10,13 @@ public class Board extends JPanel {
 	private int boardWidthInCells;
 	private int boardHeightInCells;
 	private Cell[][] cells;
-	private Set<Cell> aliveCellsAndTheirNeighbors = new HashSet<Cell>();
-	private int numOfAliveCells;
+	private Set<Cell> aliveCells = new HashSet<Cell>();
+	private Set<Cell> activeCells = new HashSet<Cell>();
 	private int frameCount = 0;
 
 	public Board(int boardWidth, int boardHeight) {
 		setBoardWidthInCells(boardWidth);
 		setBoardHeightInCells(boardHeight);
-		numOfAliveCells = 0;
 		setMetadata();
 		buildCells();
 	}
@@ -38,19 +37,16 @@ public class Board extends JPanel {
 	}
 
 	public void bringRandomCellsToLife(int numOfCells) {
-		int randomRowIndex;
-		int randomColIndex;
-		int currentNumOfAddedCells = 0;
+		int randomRowIndex, randomColIndex, currentNumOfAddedCells = 0;
 		while (currentNumOfAddedCells < numOfCells) {
 			randomRowIndex = (int) (Math.random() * boardWidthInCells);
 			randomColIndex = (int) (Math.random() * boardHeightInCells);
 			if (!cells[randomRowIndex][randomColIndex].isAlive()) {
 				cells[randomRowIndex][randomColIndex].bringToLife();
 				currentNumOfAddedCells++;
-				numOfAliveCells++;
+				processCellLifeChange(cells[randomRowIndex][randomColIndex]);
 			}
 		}
-		
 	}
 
 	public void calculateAllNeighbors() {
@@ -69,8 +65,7 @@ public class Board extends JPanel {
 
 	public HashSet<Cell> getListOfNeighbors(Cell cell) {
 		HashSet<Cell> neighbors = new HashSet<Cell>();
-		int row = cell.getRow();
-		int column = cell.getCol();
+		int row = cell.getRow(), column = cell.getCol();
 		for (int i = row - 1; i <= row + 1; i++) {
 			if (i < 0 || i >= boardHeightInCells)
 				continue;
@@ -86,17 +81,46 @@ public class Board extends JPanel {
 
 	public void bringOneCellToLife(int row, int column) {
 		cells[row][column].bringToLife();
-		numOfAliveCells++;
+		aliveCells.add(cells[row][column]);
+		activeCells.addAll(getListOfNeighbors(cells[row][column]));
 	}
 
-	public void updateCells() {
+	public void updateAllCells() {
 		calculateAllNeighbors();
 		for (int row = 0; row < boardWidthInCells; row++) {
 			for (int col = 0; col < boardHeightInCells; col++) {
 				cells[row][col].updateCell();
+				processCellLifeChange(cells[row][col]);
 			}
 		}
 		frameCount++;
+	}
+	
+	public void updateActiveCells(){
+		for(Cell c : activeCells){
+			c.updateCell();
+			processCellLifeChange(c);
+		}
+		for(Cell c : activeCells){
+			c.setNumOfAliveNeighbors(determineSingleCellNeighbors(c));
+		}
+		activeCells.clear();
+		for(Cell d : aliveCells){
+			activeCells.addAll(getListOfNeighbors(d));
+		}
+		frameCount++;
+	}
+	
+	private void processCellLifeChange(Cell cell){
+		if(cell.isAlive()) {
+			aliveCells.add(cell);
+		} else {
+			aliveCells.remove(cell);
+		}
+	}
+	
+	public int getNumOfActiveCells(){
+		return activeCells.size();
 	}
 
 	public Cell cellAt(int row, int column) {
@@ -108,7 +132,7 @@ public class Board extends JPanel {
 	}
 
 	public int getNumOfAliveCells() {
-		return numOfAliveCells;
+		return aliveCells.size();
 	}
 
 	public int getBoardWidthInCells() {

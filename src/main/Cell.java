@@ -30,6 +30,7 @@ public class Cell extends JButton{
 	public void bringToLife(){
 		alive = true;
 		currentColor = Cell.getAliveColor();
+		setBackground(currentColor);
 	}
 	
 	public void kill(){
