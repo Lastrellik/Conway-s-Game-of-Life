@@ -7,9 +7,9 @@ import javax.swing.*;
 public class MainApp {
 
 	public static void main(String[] args) {
-		Cell.setAliveColor(Color.GREEN);
-		Cell.setDeadColor(Color.BLACK);
-		Cell.setOutlineColor(Color.BLACK);
+		Cell.setAliveColor(Color.BLACK);
+		Cell.setDeadColor(Color.WHITE);
+		Cell.setOutlineColor(Color.WHITE);
 		Color[] colors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE,
 				Color.MAGENTA, Color.cyan, Color.PINK, Color.GRAY, Color.WHITE
 		};
@@ -30,6 +30,12 @@ public class MainApp {
 		board.bringOneCellToLife(57, 49);
 		board.bringOneCellToLife(56, 49);
 		board.bringOneCellToLife(59, 50);
+		try {
+			Thread.sleep(10000);
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		board.calculateAllNeighbors();
 		while (true) {
 			//board.bringRandomCellsToLife(5);
@@ -41,14 +47,10 @@ public class MainApp {
 				e.printStackTrace();
 			}
 			board.updateActiveCells();
-			if(board.getFrameCount() == 20) {
+			if(board.getFrameCount() == 18) {
 				board.bringOneCellToLife(50, 50);
 				board.calculateAllNeighbors();
 			}
-			if(board.getFrameCount() == 40) {
-				System.out.println("frame 40");
-			}
-			System.out.println("Num of alive cells: " + board.getNumOfActiveCells() + " Frame: " + board.getFrameCount());
 		}
 	}
 
