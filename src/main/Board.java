@@ -2,31 +2,30 @@ package main;
 
 import java.awt.*;
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.*;
 
-public class Board extends JPanel {
+public class Board extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private int boardWidthInCells;
 	private int boardHeightInCells;
 	private Cell[][] cells;
-	private Set<Cell> aliveCells = new HashSet<Cell>();
-	private Set<Cell> activeCells = new HashSet<Cell>();
+	private Set<Cell> aliveCells = Collections.newSetFromMap(new ConcurrentHashMap<Cell, Boolean>());
 	private int frameCount = 0;
-
+	
 	public Board(int boardWidth, int boardHeight) {
 		setBoardWidthInCells(boardWidth);
 		setBoardHeightInCells(boardHeight);
 		setMetadata();
-		buildCells();
 	}
 
 	private void setMetadata() {
 		setLayout(new GridLayout(boardWidthInCells, boardHeightInCells, 0, 0));
 	}
 
-	private void buildCells() {
-		cells = new Cell[boardWidthInCells][boardHeightInCells];
+	public void buildCells() {
+		cells = new Cell[boardHeightInCells][boardWidthInCells];
 		for (int row = 0; row < boardHeightInCells; row++) {
 			for (int col = 0; col < boardWidthInCells; col++) {
 				cells[row][col] = new Cell(row, col);
@@ -82,34 +81,15 @@ public class Board extends JPanel {
 	public void bringOneCellToLife(int row, int column) {
 		cells[row][column].bringToLife();
 		aliveCells.add(cells[row][column]);
-		activeCells.addAll(getListOfNeighbors(cells[row][column]));
 	}
 
 	public void updateAllCells() {
 		calculateAllNeighbors();
-		for (int row = 0; row < boardWidthInCells; row++) {
-			for (int col = 0; col < boardHeightInCells; col++) {
+		for (int row = 0; row < boardHeightInCells; row++) {
+			for (int col = 0; col < boardWidthInCells; col++) {
 				cells[row][col].updateCell();
 				processCellLifeChange(cells[row][col]);
 			}
-		}
-		frameCount++;
-		repaint();
-	}
-	
-	public void updateActiveCells(){
-		System.out.println(this.activeCells.size());
-		for(Cell c : activeCells){
-			c.setNumOfAliveNeighbors(determineSingleCellNeighbors(c));
-		}
-		for(Cell c : activeCells){
-			c.updateCell();
-			processCellLifeChange(c);
-		}
-		activeCells.clear();
-		for(Cell d : aliveCells){
-			activeCells.addAll(getListOfNeighbors(d));
-			activeCells.add(d);
 		}
 		frameCount++;
 	}
@@ -129,10 +109,6 @@ public class Board extends JPanel {
 			newBoard.bringOneCellToLife(c.getRow(), c.getCol());
 		}
 		return newBoard;
-	}
-	
-	public int getNumOfActiveCells(){
-		return activeCells.size();
 	}
 
 	public Cell cellAt(int row, int column) {
@@ -175,20 +151,12 @@ public class Board extends JPanel {
 		this.aliveCells = aliveCells;
 	}
 
-	public Set<Cell> getActiveCells() {
-		return new HashSet<Cell>(activeCells);
-	}
-
-	public void setActiveCells(Set<Cell> activeCells) {
-		this.activeCells = activeCells;
-	}
-
 	private Cell[][] getCells() {
 		return cells.clone();
 	}
 
 	private void setCells(Cell[][] cells) {
 		this.cells = cells;
-	}	
+	}
 	
 }

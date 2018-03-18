@@ -1,10 +1,7 @@
 package main;
 
 import java.awt.Color;
-
 import javax.swing.*;
-import java.util.*;
-import java.util.Timer;
 
 public class MainApp {
 	private static JFrame frame;
@@ -16,20 +13,23 @@ public class MainApp {
 	public static void main(String[] args) {
 		configureColors();
 		boardA = new Board(100, 100);
+		boardA.buildCells();
 		buildGui(boardA);
 		bringCellsToLife(boardA);
-		sleep(1000);
+		int timeBetweenFrames = 20;
+		sleep(10000);
 		while(true){
 			mainPanel.setBoard(boardA);
+			mainPanel.repaint();
 			boardB = boardA.copyOfBoard();
 			boardB.updateAllCells();
-			sleep(200);
+			sleep(timeBetweenFrames);
 			mainPanel.setBoard(boardB);
+			mainPanel.repaint();
 			boardA = boardB.copyOfBoard();
 			boardA.updateAllCells();
-			sleep(200);
+			sleep(timeBetweenFrames);
 		}
-		
 	}
 
 	private static void bringCellsToLife(final Board board) {
@@ -63,12 +63,9 @@ public class MainApp {
 	}
 	
 	private static void configureColors(){
-		Cell.setAliveColor(Color.BLACK);
-		Cell.setDeadColor(Color.WHITE);
-		Cell.setOutlineColor(Color.WHITE);
-		Color[] colors = {Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE,
-				Color.MAGENTA, Color.cyan, Color.PINK, Color.GRAY, Color.WHITE
-		};		
+		Cell.setAliveColor(Color.GREEN);
+		Cell.setDeadColor(Color.BLACK);
+		Cell.setOutlineColor(Color.BLACK);
 	}
 
 }

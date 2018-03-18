@@ -3,6 +3,8 @@ package main;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
@@ -69,7 +71,22 @@ public class Cell extends JButton{
 				((Cell) arg0.getSource()).toggleLife();
 			}
 		});
+		
+		addMouseMotionListener(new MouseMotionListener(){
+
+			@Override
+			public void mouseDragged(MouseEvent arg0) {
+			}
+
+			@Override
+			public void mouseMoved(MouseEvent arg0) {
+				((Cell) arg0.getSource()).bringToLife();
+			}
+			
+		});
+			
 	}
+	
 	
 	public Color getCurrentColor(){
 		return currentColor;

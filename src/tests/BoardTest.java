@@ -34,6 +34,7 @@ public class BoardTest {
 	@Test
 	public void testBringRandomCellsToLife(){
 		Board boardWithRandomCells = new Board(100, 100);
+		boardWithRandomCells.buildCells();
 		boardWithRandomCells.bringRandomCellsToLife(25);
 		assertEquals(25, boardWithRandomCells.getNumOfAliveCells());
 	}
@@ -41,6 +42,7 @@ public class BoardTest {
 	@Test
 	public void testBringOneCellToLife(){
 		Board boardOneCellToLife = new Board(10, 10);
+		boardOneCellToLife.buildCells();
 		boardOneCellToLife.bringOneCellToLife(0, 0);
 		assertEquals(1, boardOneCellToLife.getNumOfAliveCells());
 	}
@@ -48,12 +50,14 @@ public class BoardTest {
 	@Test
 	public void testCellAt(){
 		Board boardToTestCellAt = new Board(10, 10);
+		boardToTestCellAt.buildCells();
 		boardToTestCellAt.bringOneCellToLife(1, 1);
 		assertTrue(boardToTestCellAt.cellAt(1, 1).isAlive());
 	}
 	
 	@Test
 	public void testCalculateAllNeighbors(){
+		boardToTestNeighbors.buildCells();
 		boardToTestNeighbors.bringOneCellToLife(50, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, 49).getNumOfAliveNeighbors());
@@ -61,6 +65,7 @@ public class BoardTest {
 	
 	@Test
 	public void testCalculateAllNeighbors_topEdgeOfBoard(){
+		boardToTestNeighbors.buildCells();
 		boardToTestNeighbors.bringOneCellToLife(0, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(0, 49).getNumOfAliveNeighbors());
@@ -68,6 +73,7 @@ public class BoardTest {
 	
 	@Test
 	public void testCalculateAllNeighbors_bottomEdgeOfBoard(){
+		boardToTestNeighbors.buildCells();
 		boardToTestNeighbors.bringOneCellToLife(HEIGHT_IN_CELLS - 1, 50);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(HEIGHT_IN_CELLS - 1, 49).getNumOfAliveNeighbors());
@@ -75,6 +81,7 @@ public class BoardTest {
 	
 	@Test
 	public void testCalculateAllNeighbors_rightEdgeOfBoard(){
+		boardToTestNeighbors.buildCells();
 		boardToTestNeighbors.bringOneCellToLife(50, WIDTH_IN_CELLS - 1);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, WIDTH_IN_CELLS - 1).getNumOfAliveNeighbors());
@@ -82,6 +89,7 @@ public class BoardTest {
 	
 	@Test
 	public void testCalculateAllNeighbors_leftEdgeOfBoard(){
+		boardToTestNeighbors.buildCells();
 		boardToTestNeighbors.bringOneCellToLife(50, 0);
 		boardToTestNeighbors.calculateAllNeighbors();
 		assertEquals(1, boardToTestNeighbors.cellAt(49, 0).getNumOfAliveNeighbors());
@@ -90,6 +98,7 @@ public class BoardTest {
 	@Test
 	public void testGetListOfNeighbors(){
 		Board testGetListOfNeighbors = new Board(10,10);
+		testGetListOfNeighbors.buildCells();
 		Cell cellToTest = testGetListOfNeighbors.cellAt(5, 5);
 		assertEquals(8, testGetListOfNeighbors.getListOfNeighbors(cellToTest).size());
 	}
@@ -97,6 +106,7 @@ public class BoardTest {
 	@Test
 	public void testGetFrameCount(){
 		Board testGetFrameCountBoard = new Board(10, 10);
+		testGetFrameCountBoard.buildCells();
 		testGetFrameCountBoard.updateAllCells();
 		assertEquals(1, testGetFrameCountBoard.getFrameCount());
 	}
@@ -104,27 +114,9 @@ public class BoardTest {
 	@Test
 	public void testUpdateAllCells(){
 		Board boardToUpdateAllCells = new Board(10, 10);
+		boardToUpdateAllCells.buildCells();
 		boardToUpdateAllCells.updateAllCells();
 		assertEquals(1, boardToUpdateAllCells.getFrameCount());
-	}
-	
-	@Test
-	public void testUpdateActiveCells(){
-		Board boardToUpdateActiveCells = new Board(10, 10);
-		boardToUpdateActiveCells.bringOneCellToLife(0, 0);
-		boardToUpdateActiveCells.bringOneCellToLife(0, 1);
-		boardToUpdateActiveCells.bringOneCellToLife(0, 2);
-		boardToUpdateActiveCells.updateActiveCells();
-		assertEquals(9, boardToUpdateActiveCells.getNumOfActiveCells());
-	}
-	
-	@Test
-	public void testGetNumOfActiveCells(){
-		Board boardToTestGetNumOfActiveCells = new Board(10, 10);
-		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 0);
-		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 1);
-		boardToTestGetNumOfActiveCells.bringOneCellToLife(0, 2);
-		assertEquals(8, boardToTestGetNumOfActiveCells.getNumOfActiveCells());
 	}
 	
 	@Test
@@ -149,6 +141,7 @@ public class BoardTest {
 	@Test
 	public void testProcessCellLifeChange(){
 		Board processCellLifeChangeBoard = new Board(10, 10);
+		processCellLifeChangeBoard.buildCells();
 		processCellLifeChangeBoard.bringOneCellToLife(5, 5);
 		assertEquals(1, processCellLifeChangeBoard.getNumOfAliveCells());		
 	}

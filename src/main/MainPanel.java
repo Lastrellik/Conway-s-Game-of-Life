@@ -16,7 +16,6 @@ public class MainPanel extends JPanel {
 
 	public void setBoard(Board board){
 		gameBoard = board;
-		//add(board, BorderLayout.CENTER);
 	}
 	
 	public Board getBoard(){

@@ -17,13 +17,6 @@ public class MainPanelTest {
 		MainPanel mainPanel = new MainPanel(new Board(100, 100));
 		assertTrue(mainPanel.getLayout() instanceof BorderLayout);
 	}
-	
-	@Test
-	public void testSetBoard(){
-		Board testSetBoard = new Board(10, 10);
-		defaultMainPanel.setBoard(testSetBoard);
-		assertEquals(testSetBoard, defaultPanelLayout.getLayoutComponent(BorderLayout.CENTER));
-	}
 
 	@Test
 	public void testGetBoard(){
