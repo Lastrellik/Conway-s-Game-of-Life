@@ -94,9 +94,11 @@ public class Board extends JPanel {
 			}
 		}
 		frameCount++;
+		repaint();
 	}
 	
 	public void updateActiveCells(){
+		System.out.println(this.activeCells.size());
 		for(Cell c : activeCells){
 			c.setNumOfAliveNeighbors(determineSingleCellNeighbors(c));
 		}
@@ -118,6 +120,15 @@ public class Board extends JPanel {
 		} else {
 			aliveCells.remove(cell);
 		}
+	}
+	
+	public Board copyOfBoard(){
+		Board newBoard = new Board(boardWidthInCells, boardHeightInCells);
+		newBoard.setCells(this.getCells());
+		for (Cell c : aliveCells){
+			newBoard.bringOneCellToLife(c.getRow(), c.getCol());
+		}
+		return newBoard;
 	}
 	
 	public int getNumOfActiveCells(){
@@ -155,4 +166,29 @@ public class Board extends JPanel {
 			throw new IllegalArgumentException("board height cannot be negative");
 		this.boardHeightInCells = boardHeightInCells;
 	}
+
+	public Set<Cell> getAliveCells() {
+		return new HashSet<Cell>(aliveCells);
+	}
+
+	public void setAliveCells(Set<Cell> aliveCells) {
+		this.aliveCells = aliveCells;
+	}
+
+	public Set<Cell> getActiveCells() {
+		return new HashSet<Cell>(activeCells);
+	}
+
+	public void setActiveCells(Set<Cell> activeCells) {
+		this.activeCells = activeCells;
+	}
+
+	private Cell[][] getCells() {
+		return cells.clone();
+	}
+
+	private void setCells(Cell[][] cells) {
+		this.cells = cells;
+	}	
+	
 }

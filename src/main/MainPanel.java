@@ -8,13 +8,15 @@ public class MainPanel extends JPanel {
 	private Board gameBoard;
 	private ControlPanel controlPanel;
 	
-	public MainPanel(){
+	public MainPanel(Board board){
 		setLayout(new BorderLayout());
+		this.gameBoard = board;
+		add(board, BorderLayout.CENTER);
 	}
 
 	public void setBoard(Board board){
 		gameBoard = board;
-		add(board, BorderLayout.CENTER);
+		//add(board, BorderLayout.CENTER);
 	}
 	
 	public Board getBoard(){

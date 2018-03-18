@@ -8,13 +8,13 @@ import org.junit.Test;
 import main.*;
 
 public class MainPanelTest {
-	MainPanel defaultMainPanel = new MainPanel();
+	MainPanel defaultMainPanel = new MainPanel(new Board(100,100));
 	BorderLayout defaultPanelLayout = (BorderLayout) defaultMainPanel.getLayout();
 	ControlPanel defaultControlPanel = new ControlPanel();
 
 	@Test
 	public void testConstructor() {
-		MainPanel mainPanel = new MainPanel();
+		MainPanel mainPanel = new MainPanel(new Board(100, 100));
 		assertTrue(mainPanel.getLayout() instanceof BorderLayout);
 	}
 	
