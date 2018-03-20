@@ -18,6 +18,7 @@ public class Cell extends JButton{
 	private Color currentColor;
 	private int aliveNeighbors = 0;
 	private final int ROW, COL;
+	private boolean bringToLifeOnMouseOver = false;
 	
 	public Cell(int row, int col){
 		setBorder(new LineBorder(outlineColor));
@@ -38,6 +39,7 @@ public class Cell extends JButton{
 	public void kill(){
 		alive = false;
 		currentColor = Cell.getDeadColor();
+		setBackground(currentColor);
 	}
 	
 	public void toggleLife(){
@@ -80,6 +82,7 @@ public class Cell extends JButton{
 
 			@Override
 			public void mouseMoved(MouseEvent arg0) {
+				if (!bringToLifeOnMouseOver) return;
 				((Cell) arg0.getSource()).bringToLife();
 			}
 			
@@ -135,4 +138,13 @@ public class Cell extends JButton{
 	public static Color getOutlineColor(){
 		return Cell.outlineColor;
 	}
+
+	public boolean isBringToLifeOnMouseOver() {
+		return bringToLifeOnMouseOver;
+	}
+
+	public void setBringToLifeOnMouseOver(boolean bringToLifeOnMouseOver) {
+		this.bringToLifeOnMouseOver = bringToLifeOnMouseOver;
+	}
+	
 }

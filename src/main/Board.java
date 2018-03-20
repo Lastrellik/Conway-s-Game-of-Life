@@ -94,12 +94,37 @@ public class Board extends JPanel{
 		frameCount++;
 	}
 	
+	public void enableMouseOver(){
+		for (Cell[] row : getCells()){
+			for (Cell c : row){
+				c.setBringToLifeOnMouseOver(true);
+			}
+		}
+	}
+	
+	public void disableMouseOver(){
+		for (Cell[] row : getCells()){
+			for (Cell c : row){
+				c.setBringToLifeOnMouseOver(false);
+			}
+		}
+	}
+	
 	private void processCellLifeChange(Cell cell){
 		if(cell.isAlive()) {
 			aliveCells.add(cell);
 		} else {
 			aliveCells.remove(cell);
 		}
+	}
+	
+	public void resetBoard(){
+		for (Cell[] row : getCells()){
+			for (Cell c : row){
+				c.kill();
+			}
+		}
+		aliveCells.clear();
 	}
 	
 	public Board copyOfBoard(){
@@ -151,7 +176,7 @@ public class Board extends JPanel{
 		this.aliveCells = aliveCells;
 	}
 
-	private Cell[][] getCells() {
+	public Cell[][] getCells() {
 		return cells.clone();
 	}
 
