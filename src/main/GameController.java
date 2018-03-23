@@ -1,5 +1,7 @@
 package main;
 
+import java.awt.Toolkit;
+
 public class GameController {
 	private Board gameBoardA;
 	private Board gameBoardB;
@@ -24,12 +26,16 @@ public class GameController {
 			}
 			gameBoardB = gameBoardA;
 			gameBoardB.updateAllCells();
+			Toolkit.getDefaultToolkit().sync();
+			gameBoardB.repaint();
 			sleep(timeBetweenFrames);
 			while(isPaused){
 				sleep(100);
 			}
 			gameBoardA = gameBoardB;
 			gameBoardA.updateAllCells();
+			gameBoardA.repaint();
+			Toolkit.getDefaultToolkit().sync();
 			sleep(timeBetweenFrames);
 		}		
 	}
