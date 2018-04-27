@@ -1,11 +1,11 @@
-package tests;
+package src.tests;
 
 import static org.junit.Assert.*;
 import java.awt.GridLayout;
 
 import org.junit.*;
 import org.junit.rules.*;
-import main.*;
+import src.main.*;
 
 public class BoardTest {
 	private final int WIDTH_IN_CELLS = 100;

@@ -1,4 +1,4 @@
-package tests;
+package src.tests;
 
 import static org.junit.Assert.*;
 import java.awt.Color;
@@ -6,7 +6,7 @@ import java.awt.Color;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 
-import main.Cell;
+import src.main.Cell;
 
 public class CellTest {
 	Cell defaultCell = new Cell(5, 5);

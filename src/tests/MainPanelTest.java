@@ -1,8 +1,8 @@
-package tests;
+package src.tests;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import main.*;
+import src.main.*;
 
 public class MainPanelTest {
 

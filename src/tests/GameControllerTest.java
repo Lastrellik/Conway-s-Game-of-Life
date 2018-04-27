@@ -1,7 +1,7 @@
-package tests;
+package src.tests;
 
 import static org.junit.Assert.*;
-import main.*;
+import src.main.*;
 
 import org.junit.Test;
 

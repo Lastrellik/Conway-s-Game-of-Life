@@ -1,10 +1,10 @@
-package tests;
+package src.tests;
 
 import static org.junit.Assert.*;
 
 import java.awt.*;
 import org.junit.*;
-import main.*;
+import src.main.*;
 
 public class ControlPanelTest {
 	
